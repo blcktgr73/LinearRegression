@@ -74,13 +74,14 @@ python quick_test.py
   - Linear Regression에서 정규화의 한계 이해
   - 정규화의 필요성: Ridge/Lasso, 경사하강법, 신경망에서 중요
 
-### 🔄 진행 예정 단계
+- [x] **3단계: 모델 구현 및 비교** (2025-01-14)
+  - Linear Regression 기본 모델 구현
+  - Ridge Regression (L2 정규화) 구현 및 최적 α 탐색
+  - Lasso Regression (L1 정규화) 구현 및 특성 선택 효과 확인
+  - 모델별 성능 지표 비교 및 과적합 방지 효과 분석
+  - 정규화 경로(Regularization Path) 시각화
 
-- [ ] **3단계: 모델 구현 및 비교**
-  - Linear Regression 기본 모델
-  - Ridge Regression (L2 정규화)
-  - Lasso Regression (L1 정규화)
-  - 모델별 성능 지표 비교 (MSE, MAE, R²)
+### 🔄 진행 예정 단계
 
 - [ ] **4단계: 하이퍼파라미터 최적화**
   - GridSearchCV를 통한 최적 파라미터 탐색
