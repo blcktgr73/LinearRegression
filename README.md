@@ -28,29 +28,53 @@ LinearRegression/
 ├── test_notebook.py           # 노트북 상세 테스트 스크립트
 ├── quick_test.py              # 노트북 빠른 테스트 스크립트
 ├── requirements.txt           # 필요 라이브러리 목록
+├── PROJECT_SUMMARY.md         # 프로젝트 완료 보고서
+├── CLAUDE.md                  # Claude Code 설정 파일
 ├── .gitignore                 # Git 제외 파일 목록
-└── README.md
+└── README.md                  # 프로젝트 소개 문서
 ```
 
-## 🚀 시작하기
+## 🚀 빠른 시작
 
-### 1. 환경 설정
+### 📋 사전 요구사항
+- Python 3.8 이상
+- Jupyter Notebook
+- Git
+
+### ⚡ 한 번에 실행하기
 ```bash
+# 1. 저장소 클론
+git clone https://github.com/blcktgr73/LinearRegression.git
+cd LinearRegression
+
+# 2. 가상환경 생성 (권장)
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# 3. 패키지 설치
 pip install -r requirements.txt
-```
 
-### 2. Jupyter 실행
-```bash
+# 4. Jupyter Notebook 실행
 jupyter notebook
 ```
 
-### 3. 노트북 테스트
-```bash
-# 빠른 테스트 (오류 확인)
-jupyter nbconvert --to notebook --execute --stdout notebooks/01_eda_fixed.ipynb > /dev/null
+### 📚 노트북 순서대로 실행
+1. **01_eda_fixed.ipynb** - 데이터 탐색 및 분석
+2. **02_normalization.ipynb** - 정규화 효과 비교
+3. **03_models.ipynb** - 모델 구현 및 비교
+4. **04_optimization.ipynb** - 하이퍼파라미터 최적화
+5. **05_analysis.ipynb** - 최종 결과 분석
 
-# 파이썬 스크립트로 테스트
+### 🧪 노트북 테스트
+```bash
+# 전체 노트북 빠른 검증
 python quick_test.py
+
+# 개별 노트북 실행 테스트
+jupyter nbconvert --to notebook --execute --inplace notebooks/01_eda_fixed.ipynb
+
+# 상세 테스트 (모든 노트북)
+python test_notebook.py
 ```
 
 ## 📊 학습 단계
@@ -172,3 +196,96 @@ python quick_test.py
 - **v0.3.0**: Ridge, Lasso 모델 구현
 - **v0.4.0**: GridSearchCV 하이퍼파라미터 최적화
 - **v1.0.0**: 최종 결과 분석 및 프로젝트 완료
+- **v1.0.1**: 최종 문서 업데이트 - 프로젝트 완료 보고서 추가
+
+## 💻 사용 예제
+
+### 기본 모델 실행
+```python
+# 필요한 라이브러리 import
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import r2_score
+
+# 데이터 로드
+X, y = fetch_california_housing(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 파이프라인 생성
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', Ridge(alpha=0.001))
+])
+
+# 모델 훈련 및 예측
+pipeline.fit(X_train, y_train)
+y_pred = pipeline.predict(X_test)
+
+# 성능 평가
+r2 = r2_score(y_test, y_pred)
+print(f"R² Score: {r2:.4f}")
+```
+
+### 한글 폰트 설정 (Windows)
+```python
+# src/font_setup.py 사용
+import sys
+sys.path.append('src')
+from font_setup import setup_korean_font
+
+setup_korean_font()
+```
+
+## 🤝 기여 방법
+
+### 이슈 및 개선 제안
+1. [Issues](https://github.com/blcktgr73/LinearRegression/issues)에 버그 리포트나 기능 요청
+2. 코드 개선 사항이나 문서 오타 수정
+3. 새로운 분석 아이디어나 모델 제안
+
+### Pull Request
+1. Fork 후 feature 브랜치 생성
+2. 변경사항 구현 및 테스트
+3. 상세한 설명과 함께 PR 생성
+
+## ❓ 자주 묻는 질문 (FAQ)
+
+### Q: 왜 모든 모델의 성능이 동일한가요?
+**A**: California Housing 데이터셋은 강한 선형 관계를 가지고 있어, 정규화 효과가 제한적입니다. 더 복잡한 데이터에서는 모델 간 차이가 클 것입니다.
+
+### Q: 한글 폰트가 깨져 보입니다.
+**A**: `src/font_setup.py`의 `setup_korean_font()` 함수를 사용하세요. Windows 환경에서 matplotlib의 한글 표시 문제를 해결해줍니다.
+
+### Q: 성능을 더 향상시킬 방법이 있나요?
+**A**: 다음 방법들을 시도해보세요:
+- Random Forest, XGBoost 등 비선형 모델
+- 지리적 특성을 조합한 파생 변수 생성
+- 이상치 제거 및 데이터 전처리 개선
+
+### Q: 다른 데이터셋에도 적용할 수 있나요?
+**A**: 네! 파이프라인 구조는 다른 회귀 문제에도 쉽게 적용할 수 있습니다. 데이터 로딩 부분만 수정하면 됩니다.
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+
+## 👨‍💻 작성자
+
+- **GitHub**: [@blcktgr73](https://github.com/blcktgr73)
+- **프로젝트 링크**: [LinearRegression](https://github.com/blcktgr73/LinearRegression)
+
+## 📚 참고 자료
+
+- [Scikit-learn Documentation](https://scikit-learn.org/stable/)
+- [California Housing Dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html)
+- [Ridge and Lasso Regression](https://scikit-learn.org/stable/modules/linear_model.html#ridge-regression)
+- [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html)
+
+---
+
+⭐ **이 프로젝트가 도움이 되었다면 Star를 눌러주세요!** ⭐
+
+📝 **더 자세한 내용은 [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)를 확인하세요.**
